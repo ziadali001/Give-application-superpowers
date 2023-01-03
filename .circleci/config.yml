@@ -208,7 +208,7 @@ jobs:
             cd .circleci/ansible 
             cat inventory
             ansible-playbook -i inventory.txt configure-server.yml 
-      - destroy-environment      
+      - destory-enviroment      
 
 #   run-migrations:
 #     docker:
