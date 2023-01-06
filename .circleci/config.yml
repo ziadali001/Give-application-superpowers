@@ -1,7 +1,7 @@
 version: 2.1
 
-# orbs:    
-#   slack: circleci/slack@4.12.0
+orbs:    
+  slack: circleci/slack@4.12.0
 
 
 commands:
@@ -44,12 +44,12 @@ commands:
             sudo n 13.8.0         
 
 
-  # notify_on_failure:
-  #   steps:
-  #     - slack/notify:
-  #         event: fail
-  #         channel: uda-final-project 
-  #         template: basic_fail_1
+  notify_on_failure:
+    steps:
+      - slack/notify:
+          event: fail
+          channel: cicd-pipeline 
+          template: basic_fail_1
 
 
   destroy-environment:
@@ -67,9 +67,7 @@ commands:
             aws s3 rm s3://udapeople-<<parameters.Workflow_ID>> --recursive 
             aws cloudformation delete-stack --stack-name udapeople-frontend-<< parameters.Workflow_ID >>
 
-
-
-  revert-migrations: 
+  revert-migrations:
     description: Revert the last migration
     parameters:
       Workflow_ID:
@@ -80,14 +78,13 @@ commands:
           name: Revert migrations
           when: on_fail
           command: |
-            SUCCESS=$(curl --insecure  https://kvdb.io/44As3Xf6bJMjGjjcurbYaJ/migration_<< parameters.Workflow_ID >>)
-            # Logic for reverting the database state
-            if (( $SUCCESS == 1 ));
+            SUCCESS=$(curl --insecure  https://kvdb.io/${KVDB_BUCKET}/migration_<< parameters.Workflow_ID >>)
+            if(( $SUCCESS == 1 )); 
             then
-              cd ~/projects/backend
+              cd ~/project/backend
               npm install
-              npm run migration:revert
-            fi
+              npm run migrations:revert
+            fi  
             
 jobs:
 
@@ -108,7 +105,7 @@ jobs:
           paths: [frontend/node_modules]
           key: frontend-deps
 
-      # - notify_on_failure    
+      - notify_on_failure    
 
  
   build-backend:
@@ -128,7 +125,7 @@ jobs:
           paths: [backend/node_modules]
           key: backend-deps
 
-      # - notify_on_failure    
+      - notify_on_failure    
 
  
   test-frontend:
@@ -145,7 +142,7 @@ jobs:
             npm install
             npm test
 
-      # - notify_on_failure          
+      - notify_on_failure          
  
  
   test-backend:
@@ -162,7 +159,7 @@ jobs:
              npm install
              npm test
 
-      # - notify_on_failure      
+      - notify_on_failure      
  
   
   scan-frontend:
@@ -181,7 +178,7 @@ jobs:
             npm audit fix --audit-level=critical
             #npm audit --audit-level=critical
 
-      # - notify_on_failure      
+      - notify_on_failure      
 
 
   scan-backend:
@@ -201,7 +198,7 @@ jobs:
             npm audit fix --force --audit-level=critical
             #npm audit --audit-level=critical
 
-      # - notify_on_failure
+      - notify_on_failure
 
 
   deploy-infrastructure:
