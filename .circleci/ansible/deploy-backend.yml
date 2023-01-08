@@ -26,9 +26,9 @@
       - PORT: "{{ lookup('env', 'PORT')}}"
 
   pre_tasks:
-    - name: Wait 200 seconds
+    - name: Wait 600 seconds
       ansible.builtin.wait_for_connection:
-      timeout: 200
+      timeout: 600
     
     - name: "install python for Ansible."
       become: true
