@@ -15,7 +15,7 @@
     cd ~/backend-app/
     ls -al
     npm install
-    
+
 - name: "Executing Node app with PM2"
   shell: |
     cd ~/backend-app/dist
@@ -32,3 +32,4 @@
   become: true
   shell: |
     env PATH=$PATH:/usr/local/bin pm2 startup systemd -u ubuntu --hp /home/ubuntu
+    
