@@ -1,9 +1,7 @@
 ---
 
-- name: "configuration play." 
+- name: "deployment play." 
   hosts: web
-  become_user: root
-  become: true
   user: ubuntu
   gather_facts: false
   vars:
