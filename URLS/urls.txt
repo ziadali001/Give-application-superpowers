@@ -1,0 +1,5 @@
+1- https://github.com/ziadali001/udapeople-cicd
+2- http://udapeople-bef983a.s3-website-us-east-1.amazonaws.com
+3- http://d4hy3o0mrm5jb.cloudfront.net/#/employees
+4- http://ec2-34-199-160-244.compute-1.amazonaws.com:3030/api/status
+5- http://ec2-54-144-82-93.compute-1.amazonaws.com:9090/graph
